@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatEnhance</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ChatEnhance: Real-Time Customer Support Enhancement Tool</h1>
+        </header>
+
+        <div class="chat-window" id="chat-window">
+            <!-- Chat messages will be appended here -->
+        </div>
+
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Type your message here...">
+            <button id="send-button">Send</button>
+        </div>
+
+        <div class="error-message" id="error-message" style="display: none;">
+            <!-- Error messages will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#send-button').click(function() {
+                var message = $('#chat-input').val();
+                $('#chat-input').val('');
+
+                if (message.trim() !== '') {
+                    $.ajax({
+                        url: '/chat',
+                        method: 'POST',
+                        data: JSON.stringify({ message: message }),
+                        contentType: 'application/json',
+                        success: function(response) {
+                            $('#chat-window').append('<p><strong>You:</strong> ' + message + '</p>');
+                            $('#chat-window').append('<p><strong>ChatEnhance:</strong> ' + response.message + '</p>');
+                            $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
+                        },
+                        error: function() {
+                            $('#error-message').text('An error occurred while processing your request.').show();
+                        }
+                    });
+                }
+            });
+
+            $('#chat-input').keypress(function(e) {
+                if (e.which == 13) {
+                    $('#send-button').click();
+                    return false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+</button>

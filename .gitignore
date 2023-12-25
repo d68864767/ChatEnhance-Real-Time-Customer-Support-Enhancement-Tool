@@ -1,0 +1,21 @@
+# .gitignore
+
+# Ignore node modules
+node_modules/
+
+# Ignore environment variables
+.env
+
+# Ignore logs
+*.log
+
+# Ignore Operating System generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/Editor folders
+.vscode/
+.idea/
+
+# Ignore build files
+dist/
